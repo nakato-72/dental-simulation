@@ -3,8 +3,17 @@ import type { HearingInput, Scenario, SimulationBreakdown, SimulationInput } fro
 export const POINT_VALUES = {
   basicExam: 200,
   precisionExam: 400,
+  /** 口腔機能低下症（検査あり）= ヒアリング項目!B50、口管強「あり」 */
+  hypofunctionWithExam: 196,
+  /** 口腔機能低下症（検査なし）= ヒアリング項目!B51、口管強「なし」 */
   hypofunctionNoExam: 146,
 } as const
+
+export function getHypofunctionPointValue(oralManagementStrong: boolean): number {
+  return oralManagementStrong
+    ? POINT_VALUES.hypofunctionWithExam
+    : POINT_VALUES.hypofunctionNoExam
+}
 
 const YEN_PER_POINT = 10
 
@@ -24,8 +33,11 @@ export function calculateSimulation(
   const examPoints = examPersonCount * examPointsPerPerson * workingDays
   const examRevenue = examPoints * YEN_PER_POINT
 
+  const hypofunctionPointValue = getHypofunctionPointValue(
+    hearing.oralManagementStrong,
+  )
   const hypofunctionPoints =
-    hypofunctionPersonCount * POINT_VALUES.hypofunctionNoExam * workingDays
+    hypofunctionPersonCount * hypofunctionPointValue * workingDays
   const hypofunctionRevenue = hypofunctionPoints * YEN_PER_POINT
 
   const monthlyTotal = examRevenue + hypofunctionRevenue
