@@ -94,6 +94,12 @@
   font-size: 1rem;
   font-weight: 700;
   color: #374151;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.action-button:hover {
+  background: #f3f4f6;
 }
 
 .action-button.primary {
@@ -102,10 +108,18 @@
   color: #fff;
 }
 
+.action-button.primary:hover {
+  background: #1d4ed8;
+}
+
 .action-button.active {
   border-color: #1d4ed8;
   background: #eff6ff;
   color: #1d4ed8;
+}
+
+.action-button.active:hover {
+  background: #dbeafe;
 }
 
 .save-message {
@@ -151,6 +165,12 @@
   border-radius: 10px;
   background: #f9fafb;
   text-align: left;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.history-load:hover {
+  background: #f3f4f6;
 }
 
 .history-load strong {
@@ -171,6 +191,12 @@
   color: #b91c1c;
   font-size: 0.85rem;
   font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.history-delete:hover {
+  background: #fef2f2;
 }
 
 .panel {
@@ -228,12 +254,22 @@
   font-size: 1rem;
   font-weight: 600;
   color: #374151;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.toggle-group button:hover:not(.active) {
+  background: #f3f4f6;
 }
 
 .toggle-group button.active {
   border-color: #2563eb;
   background: #eff6ff;
   color: #1d4ed8;
+}
+
+.toggle-group button.active:hover {
+  background: #dbeafe;
 }
 
 .scenario-group {
@@ -258,6 +294,15 @@
   color: #1f2937;
 }
 
+label.scenario-row {
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+label.scenario-row:hover {
+  background: #f3f4f6;
+}
+
 .scenario-row--input {
   grid-template-columns: 18px minmax(0, 1fr) 7.5rem;
 }
@@ -268,6 +313,7 @@
   margin: 0;
   padding: 0;
   justify-self: center;
+  cursor: pointer;
 }
 
 .scenario-row-leading {
@@ -313,6 +359,7 @@
   width: 100%;
   height: 8px;
   accent-color: #2563eb;
+  cursor: pointer;
 }
 
 .breakdown {
