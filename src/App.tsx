@@ -140,74 +140,6 @@ function App() {
         <p>ヒアリング入力とシミュレーションを同時に行えます</p>
       </header>
 
-      <section className="panel save-panel">
-        <label className="field clinic-field">
-          <span>医院名</span>
-          <input
-            type="text"
-            value={clinicName}
-            placeholder="例：〇〇歯科医院"
-            onChange={(event) => setClinicName(event.target.value)}
-          />
-        </label>
-
-        <div className="save-actions">
-          <button type="button" className="action-button primary" onClick={handleSave}>
-            保存
-          </button>
-          <button
-            type="button"
-            className={`action-button ${showHistory ? 'active' : ''}`}
-            onClick={handleToggleHistory}
-          >
-            過去データ
-          </button>
-        </div>
-
-        {saveMessage ? <p className="save-message">{saveMessage}</p> : null}
-
-        {showHistory ? (
-          <div className="history-panel">
-            <label className="field">
-              <span>医院名で検索</span>
-              <input
-                type="search"
-                value={historySearch}
-                placeholder="医院名の一部を入力"
-                onChange={(event) => setHistorySearch(event.target.value)}
-              />
-            </label>
-
-            {filteredRecords.length === 0 ? (
-              <p className="history-empty">保存データはありません</p>
-            ) : (
-              <ul className="history-list">
-                {filteredRecords.map((record) => (
-                  <li key={record.id} className="history-item">
-                    <button
-                      type="button"
-                      className="history-load"
-                      onClick={() => handleLoadRecord(record)}
-                    >
-                      <strong>{record.clinicName}</strong>
-                      <span>{formatSavedAt(record.savedAt)}</span>
-                    </button>
-                    <button
-                      type="button"
-                      className="history-delete"
-                      aria-label={`${record.clinicName}を削除`}
-                      onClick={() => handleDeleteRecord(record.id)}
-                    >
-                      削除
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        ) : null}
-      </section>
-
       <main className="layout">
         <section className="panel hearing-panel">
           <h2>ヒアリング項目</h2>
@@ -532,6 +464,74 @@ function App() {
             <p className="result-label">年増収</p>
             <p className="result-value yearly">{formatYen(result.yearlyTotal)}</p>
           </div>
+
+          <section className="save-section">
+            <label className="field clinic-field">
+              <span>医院名</span>
+              <input
+                type="text"
+                value={clinicName}
+                placeholder="例：〇〇歯科医院"
+                onChange={(event) => setClinicName(event.target.value)}
+              />
+            </label>
+
+            <div className="save-actions">
+              <button type="button" className="action-button primary" onClick={handleSave}>
+                保存
+              </button>
+              <button
+                type="button"
+                className={`action-button ${showHistory ? 'active' : ''}`}
+                onClick={handleToggleHistory}
+              >
+                過去データ
+              </button>
+            </div>
+
+            {saveMessage ? <p className="save-message">{saveMessage}</p> : null}
+
+            {showHistory ? (
+              <div className="history-panel">
+                <label className="field">
+                  <span>医院名で検索</span>
+                  <input
+                    type="search"
+                    value={historySearch}
+                    placeholder="医院名の一部を入力"
+                    onChange={(event) => setHistorySearch(event.target.value)}
+                  />
+                </label>
+
+                {filteredRecords.length === 0 ? (
+                  <p className="history-empty">保存データはありません</p>
+                ) : (
+                  <ul className="history-list">
+                    {filteredRecords.map((record) => (
+                      <li key={record.id} className="history-item">
+                        <button
+                          type="button"
+                          className="history-load"
+                          onClick={() => handleLoadRecord(record)}
+                        >
+                          <strong>{record.clinicName}</strong>
+                          <span>{formatSavedAt(record.savedAt)}</span>
+                        </button>
+                        <button
+                          type="button"
+                          className="history-delete"
+                          aria-label={`${record.clinicName}を削除`}
+                          onClick={() => handleDeleteRecord(record.id)}
+                        >
+                          削除
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ) : null}
+          </section>
         </section>
       </main>
     </div>

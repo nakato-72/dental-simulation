@@ -27,8 +27,10 @@
   padding: 0 1rem 1.5rem;
 }
 
-.save-panel {
-  margin: 0 1rem 1rem;
+.save-section {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
 }
 
 .clinic-field {
@@ -317,12 +319,6 @@
 }
 
 @media (min-width: 900px) {
-  .save-panel {
-    max-width: 1200px;
-    margin: 0 auto 1rem;
-    padding: 1rem 1.25rem;
-  }
-
   .layout {
     grid-template-columns: 1.1fr 0.9fr;
     align-items: start;
