@@ -41,4 +41,6 @@ export type SavedRecord = {
   scenario: Scenario
   examPersonCount: number
   hypofunctionPersonCount: number
+  oralManagementActualIncrease: number
+  oralManagementDesiredIncrease: number
 }
