@@ -32,3 +32,13 @@ export type SimulationBreakdown = {
   monthlyTotal: number
   yearlyTotal: number
 }
+
+export type SavedRecord = {
+  id: string
+  clinicName: string
+  savedAt: string
+  hearing: HearingInput
+  scenario: Scenario
+  examPersonCount: number
+  hypofunctionPersonCount: number
+}

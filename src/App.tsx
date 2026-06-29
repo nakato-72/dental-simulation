@@ -4,7 +4,13 @@ import {
   formatNumber,
   formatYen,
 } from './calculator'
-import type { HearingInput, Scenario } from './types'
+import {
+  deleteSavedRecord,
+  formatSavedAt,
+  listSavedRecords,
+  saveRecord,
+} from './storage'
+import type { HearingInput, SavedRecord, Scenario } from './types'
 import './App.css'
 
 const DEFAULT_HEARING: HearingInput = {
@@ -45,12 +51,23 @@ function parseNumber(value: string): number {
 }
 
 function App() {
+  const [clinicName, setClinicName] = useState('')
   const [hearing, setHearing] = useState<HearingInput>(DEFAULT_HEARING)
   const [scenario, setScenario] = useState<Scenario>('increase-precision')
   const [examPersonCount, setExamPersonCount] = useState(1)
   const [hypofunctionPersonCount, setHypofunctionPersonCount] = useState(1)
+  const [showHistory, setShowHistory] = useState(false)
+  const [historySearch, setHistorySearch] = useState('')
+  const [savedRecords, setSavedRecords] = useState<SavedRecord[]>([])
+  const [saveMessage, setSaveMessage] = useState('')
 
   const activeScenario = SCENARIO_OPTIONS.find((item) => item.value === scenario)!
+
+  const filteredRecords = useMemo(() => {
+    const keyword = historySearch.trim()
+    if (!keyword) return savedRecords
+    return savedRecords.filter((record) => record.clinicName.includes(keyword))
+  }, [historySearch, savedRecords])
 
   const result = useMemo(
     () =>
@@ -69,12 +86,127 @@ function App() {
     setHearing((current) => ({ ...current, [key]: value }))
   }
 
+  const refreshSavedRecords = () => {
+    setSavedRecords(listSavedRecords())
+  }
+
+  const handleSave = () => {
+    const trimmedName = clinicName.trim()
+    if (!trimmedName) {
+      setSaveMessage('医院名を入力してください')
+      return
+    }
+
+    saveRecord({
+      id: crypto.randomUUID(),
+      clinicName: trimmedName,
+      savedAt: new Date().toISOString(),
+      hearing,
+      scenario,
+      examPersonCount,
+      hypofunctionPersonCount,
+    })
+    refreshSavedRecords()
+    setSaveMessage(`${trimmedName} を保存しました`)
+  }
+
+  const handleLoadRecord = (record: SavedRecord) => {
+    setClinicName(record.clinicName)
+    setHearing(record.hearing)
+    setScenario(record.scenario)
+    setExamPersonCount(record.examPersonCount)
+    setHypofunctionPersonCount(record.hypofunctionPersonCount)
+    setShowHistory(false)
+    setSaveMessage(`${record.clinicName} を読み込みました`)
+  }
+
+  const handleDeleteRecord = (id: string) => {
+    deleteSavedRecord(id)
+    refreshSavedRecords()
+  }
+
+  const handleToggleHistory = () => {
+    setShowHistory((current) => {
+      const next = !current
+      if (next) refreshSavedRecords()
+      return next
+    })
+  }
+
   return (
     <div className="app">
       <header className="header">
         <h1>導入効果診断シート</h1>
         <p>ヒアリング入力とシミュレーションを同時に行えます</p>
       </header>
+
+      <section className="panel save-panel">
+        <label className="field clinic-field">
+          <span>医院名</span>
+          <input
+            type="text"
+            value={clinicName}
+            placeholder="例：〇〇歯科医院"
+            onChange={(event) => setClinicName(event.target.value)}
+          />
+        </label>
+
+        <div className="save-actions">
+          <button type="button" className="action-button primary" onClick={handleSave}>
+            保存
+          </button>
+          <button
+            type="button"
+            className={`action-button ${showHistory ? 'active' : ''}`}
+            onClick={handleToggleHistory}
+          >
+            過去データ
+          </button>
+        </div>
+
+        {saveMessage ? <p className="save-message">{saveMessage}</p> : null}
+
+        {showHistory ? (
+          <div className="history-panel">
+            <label className="field">
+              <span>医院名で検索</span>
+              <input
+                type="search"
+                value={historySearch}
+                placeholder="医院名の一部を入力"
+                onChange={(event) => setHistorySearch(event.target.value)}
+              />
+            </label>
+
+            {filteredRecords.length === 0 ? (
+              <p className="history-empty">保存データはありません</p>
+            ) : (
+              <ul className="history-list">
+                {filteredRecords.map((record) => (
+                  <li key={record.id} className="history-item">
+                    <button
+                      type="button"
+                      className="history-load"
+                      onClick={() => handleLoadRecord(record)}
+                    >
+                      <strong>{record.clinicName}</strong>
+                      <span>{formatSavedAt(record.savedAt)}</span>
+                    </button>
+                    <button
+                      type="button"
+                      className="history-delete"
+                      aria-label={`${record.clinicName}を削除`}
+                      onClick={() => handleDeleteRecord(record.id)}
+                    >
+                      削除
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ) : null}
+      </section>
 
       <main className="layout">
         <section className="panel hearing-panel">

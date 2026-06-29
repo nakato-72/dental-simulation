@@ -27,6 +27,127 @@
   padding: 0 1rem 1.5rem;
 }
 
+.save-panel {
+  margin: 0 1rem 1rem;
+}
+
+.clinic-field {
+  margin-bottom: 0.85rem;
+}
+
+.field input[type='number'],
+.field input[type='text'],
+.field input[type='search'] {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  padding: 0 0.85rem;
+  font-size: 1.05rem;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.field input[type='number']:focus,
+.field input[type='text']:focus,
+.field input[type='search']:focus {
+  outline: 2px solid #2563eb;
+  border-color: #2563eb;
+}
+
+.save-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+}
+
+.action-button {
+  min-height: 48px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  background: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #374151;
+}
+
+.action-button.primary {
+  border-color: #2563eb;
+  background: #2563eb;
+  color: #fff;
+}
+
+.action-button.active {
+  border-color: #1d4ed8;
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.save-message {
+  margin: 0.75rem 0 0;
+  color: #1d4ed8;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.history-panel {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.history-empty {
+  margin: 0.75rem 0 0;
+  color: #6b7280;
+  font-size: 0.92rem;
+}
+
+.history-list {
+  list-style: none;
+  margin: 0.85rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.history-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.5rem;
+  align-items: stretch;
+}
+
+.history-load {
+  display: grid;
+  gap: 0.2rem;
+  min-height: 56px;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  background: #f9fafb;
+  text-align: left;
+}
+
+.history-load strong {
+  font-size: 0.98rem;
+  color: #111827;
+}
+
+.history-load span {
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.history-delete {
+  min-width: 56px;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  background: #fff;
+  color: #b91c1c;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
 .panel {
   background: #fff;
   border: 1px solid #e5e7eb;
@@ -53,22 +174,6 @@
 .field > span {
   font-size: 0.92rem;
   font-weight: 600;
-}
-
-.field input[type='number'] {
-  width: 100%;
-  min-height: 48px;
-  border: 1px solid #d1d5db;
-  border-radius: 10px;
-  padding: 0 0.85rem;
-  font-size: 1.05rem;
-  background: #fff;
-  box-sizing: border-box;
-}
-
-.field input[type='number']:focus {
-  outline: 2px solid #2563eb;
-  border-color: #2563eb;
 }
 
 .field-split .split-inputs {
@@ -212,6 +317,12 @@
 }
 
 @media (min-width: 900px) {
+  .save-panel {
+    max-width: 1200px;
+    margin: 0 auto 1rem;
+    padding: 1rem 1.25rem;
+  }
+
   .layout {
     grid-template-columns: 1.1fr 0.9fr;
     align-items: start;
