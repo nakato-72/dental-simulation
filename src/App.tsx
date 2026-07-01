@@ -14,7 +14,7 @@ import type { HearingInput, SavedRecord, Scenario } from './types'
 import './App.css'
 
 const DEFAULT_HEARING: HearingInput = {
-  workingDays: 22,
+  workingDays: 20,
   receiptsPerMonth: 300,
   newPatientsPerMonth: 0,
   patientsOver50: 60,
@@ -29,7 +29,7 @@ const DEFAULT_HEARING: HearingInput = {
   recallRatePercent: 90,
   insurancePercent: 80,
   selfPayPercent: 20,
-  oralManagementStrong: true,
+  oralManagementStrong: false,
 }
 
 const SCENARIO_OPTIONS: { value: Scenario; label: string; examLabel: string }[] = [
